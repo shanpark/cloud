@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: CLOUD-DISCOVERY
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10 # discovery한테 10초마다 하트비트 전송
+    lease-expiration-duration-in-seconds: 20 # discovery는 서비스를 해제 하기 전에 20초까지 기다림
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      # 'default-zone'으로 지정하면 안됨.
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+server:
+  port: 8761
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics
+
+logging:
+  config: classpath:logback.xml
